@@ -17,7 +17,7 @@
 
 ## About This Repository
 
-This portfolio documents a fully designed and implemented enterprise-grade homelab covering network security, firewall administration, DNS hardening, virtualization, Active Directory, SIEM operations, and hands-on attack/defense practice. Every section includes step-by-step configuration, exact commands, architecture decisions, and evidence of implementation.
+This portfolio documents a fully designed and implemented enterprise-grade homelab covering network security, firewall administration, DNS hardening, virtualization, Active Directory, SIEM operations, and hands-on attack/defense practice. Every section includes step-by-step configuration, exact commands, and evidence of implementation.
 
 > **Pi-hole runs as a VM on Proxmox (VLAN 10). pfSense runs on a separate dedicated physical device.**
 
@@ -62,7 +62,6 @@ This portfolio documents a fully designed and implemented enterprise-grade homel
 
 ┌─────────────────────────────────────────────────────────────────────┐
 │  Tailscale VPN · pfSense + Proxmox · zero open WAN ports           │
-│  Remote access to VLAN 10 + VLAN 30 from anywhere                  │
 └─────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -117,38 +116,6 @@ This portfolio documents a fully designed and implemented enterprise-grade homel
 
 ---
 
-## Repository Structure
-
-```
-homelab-portfolio/
-├── README.md                          ← You are here
-├── TOPOLOGY.md                        ← Full IP scheme and traffic rules
-├── 01-slate7-wan-setup/               ← Slate 7 DMZ config
-├── 02-pfsense-firewall/               ← VLANs, rules, Suricata
-│   ├── firewall-rules.md
-│   └── vlan-config.md
-├── 03-managed-switch/                 ← 802.1Q port config
-├── 04-pihole-dns/                     ← Pi-hole VM + DoH
-│   └── blocklists.md
-├── 05-proxmox-virtualization/         ← Hypervisor + bridges
-│   └── network-interfaces.conf
-├── 06-tailscale-vpn/                  ← Remote access
-├── 07-cyber-lab/                      ← Isolated attack/defense lab
-│   ├── network-design.md
-│   ├── active-directory-setup/
-│   └── attack-exercises/
-├── 08-wazuh-siem/                     ← SIEM + detection
-│   ├── custom-rules.xml
-│   └── incident-reports/
-├── build-guide/                       ← Step-by-step build instructions
-│   └── README.md + 9 step files
-├── docs/                              ← Personal build guide (Word doc)
-├── scripts/                           ← Automation scripts
-└── diagrams/                          ← Network topology diagrams
-```
-
----
-
 ## IP Quick Reference
 
 <details>
@@ -196,6 +163,37 @@ homelab-portfolio/
 ![Atera](https://img.shields.io/badge/Atera-RMM-00B4D8?style=flat-square)
 
 </div>
+
+---
+
+## Repository Structure
+
+```
+homelab-portfolio/
+├── README.md                          ← You are here
+├── TOPOLOGY.md                        ← Full IP scheme and traffic rules
+├── 01-slate7-wan-setup/
+├── 02-pfsense-firewall/
+│   ├── firewall-rules.md
+│   └── vlan-config.md
+├── 03-managed-switch/
+├── 04-pihole-dns/
+│   └── blocklists.md
+├── 05-proxmox-virtualization/
+│   └── network-interfaces.conf
+├── 06-tailscale-vpn/
+├── 07-cyber-lab/
+│   ├── network-design.md
+│   ├── active-directory-setup/
+│   └── attack-exercises/
+├── 08-wazuh-siem/
+│   ├── custom-rules.xml
+│   └── incident-reports/
+├── build-guide/                       ← Step-by-step terminal commands
+├── docs/                              ← Personal Word build guide
+├── scripts/                           ← Automation scripts
+└── diagrams/                          ← Network topology diagrams
+```
 
 ---
 

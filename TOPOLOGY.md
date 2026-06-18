@@ -12,9 +12,9 @@
                         └────────┬─────────┘
                                  │
                         ┌────────▼──────────────────┐
-                        │       pfSense Firewall      │  Separate physical device
-                        │  VLAN 10 → 192.168.10.1    │  Firewall · Suricata IDS
-                        │  VLAN 30 → 192.168.30.1    │  DHCP · NAT
+                        │   pfSense (physical device) │
+                        │  VLAN 10 → 192.168.10.1    │
+                        │  VLAN 30 → 192.168.30.1    │
                         └────────┬──────────────────┘
                                  │ trunk (VLANs 10, 30)
                    ┌─────────────▼──────────────────────┐
@@ -24,20 +24,16 @@
                    ┌──────▼───┐ ┌────▼───┐ ┌────▼───────────────────────────────┐
                    │ Pi-hole  │ │ Laptop │ │            Proxmox VE               │
                    │ VM VLAN10│ │ VLAN10 │ │         192.168.30.10               │
-                   │.10.2     │ │.10.x   │ │                                     │
-                   └──────────┘ └────────┘ │  vmbr0 (VLAN 30)                   │
-                                           │  ├── Wazuh SIEM  192.168.30.20     │
+                   │.10.2     │ │.10.x   │ │  vmbr0 (VLAN 30)                   │
+                   └──────────┘ └────────┘ │  ├── Wazuh SIEM  192.168.30.20     │
                                            │  └── OpenVAS     192.168.30.30     │
-                                           │                                     │
                                            │  vmbr2 (NO UPLINK · ISOLATED)      │
                                            │  ├── Kali Linux    10.10.10.5      │
                                            │  ├── Windows AD    10.10.10.10     │
                                            │  ├── Windows 10    10.10.10.20     │
                                            │  └── Metasploitable 10.10.10.30    │
-                                           │     Wazuh logs only · port 1514    │
                                            └────────────────────────────────────┘
-
-Tailscale VPN overlay · pfSense + Proxmox · zero open WAN ports
+Tailscale VPN · pfSense + Proxmox · zero open WAN ports
 ```
 
 ## IP Address Scheme
@@ -46,7 +42,7 @@ Tailscale VPN overlay · pfSense + Proxmox · zero open WAN ports
 | Device | IP | Notes |
 |--------|-----|-------|
 | pfSense gateway | 192.168.10.1 | VLAN 10 interface |
-| Pi-hole VM | 192.168.10.2 | Static — VM on Proxmox vmbr0 VLAN 10 |
+| Pi-hole VM | 192.168.10.2 | VM on Proxmox vmbr0 VLAN 10 |
 | Trusted laptop | 192.168.10.100–200 | DHCP range |
 
 ### VLAN 30 — Lab Infrastructure (192.168.30.0/24)
@@ -84,4 +80,3 @@ Tailscale VPN overlay · pfSense + Proxmox · zero open WAN ports
 | VLAN 30 | VLAN 10 | Block | pfSense |
 | vmbr2 | Internet | Block | Proxmox (no uplink) |
 | vmbr2 | 192.168.30.20:1514 | Allow | Proxmox static route |
-| Any | Tailscale nodes | Allow | pfSense + Tailscale ACL |

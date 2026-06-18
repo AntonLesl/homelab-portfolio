@@ -1,5 +1,4 @@
 # 03 — Managed Switch VLAN Configuration
-
 **Skills:** 802.1Q trunking, access port assignment, layer-2 isolation
 
 ## Port Assignment
@@ -12,10 +11,14 @@
 | 5–8 | Spare | — | — |
 
 ## TP-Link TL-SG108E Steps
-1. Set management IP to `192.168.30.200`
-2. VLAN 10: Port 1 Tagged, Ports 2–3 Untagged
-3. VLAN 30: Port 1 Tagged, Port 4 Untagged
-4. PVID: Port 2→10, Port 3→10, Port 4→30
+1. Set management IP: `192.168.30.200`
+2. VLAN → 802.1Q VLAN → Enable
+3. VLAN 10: Port 1 Tagged, Ports 2–3 Untagged
+4. VLAN 30: Port 1 Tagged, Port 4 Untagged
+5. PVID: Port 2→10, Port 3→10, Port 4→30
+
+## Verification
+Plug laptop into port 3 → should get `192.168.10.x` IP from pfSense DHCP.
 
 ## Resume Bullet
-> "Configured 8-port managed switch with 802.1Q VLAN trunking enforcing layer-2 isolation"
+> "Configured 8-port managed switch with 802.1Q VLAN trunking enforcing layer-2 traffic isolation between all segments"

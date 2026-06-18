@@ -17,9 +17,9 @@
 | 4 | Block | LAB net | any | any | Default deny |
 
 ## WAN
-Default: block all inbound. No allow rules. Tailscale handles remote access.
+Default: block all inbound. Zero allow rules. Tailscale handles remote access.
 
 ## Notes
 - vmbr2 has no pfSense interface — isolation enforced at Proxmox hypervisor
-- Suricata runs on WAN in IPS mode (install at Step 12)
+- Suricata WAN IPS mode — install at Step 12 (last)
 - pfSense syslog → Wazuh 192.168.30.20:514

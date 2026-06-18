@@ -1,14 +1,13 @@
 # 06 — Tailscale VPN
+**Skills:** Mesh VPN, subnet routing, zero-trust remote access, ACL policy
 
-**Skills:** Mesh VPN, subnet routing, zero-trust remote access, Tailscale ACLs
+## Subnet Routes Advertised
+| Node | Subnet |
+|------|--------|
+| pfSense | 192.168.10.0/24 |
+| Proxmox | 192.168.30.0/24 |
 
-## Subnet Routes
-| Node | Advertised Subnet |
-|------|-----------------|
-| pfSense | 192.168.10.0/24 (VLAN 10) |
-| Proxmox | 192.168.30.0/24 (VLAN 30) |
-
-> vmbr2 (10.10.10.0/24) intentionally NOT advertised. Lab VMs accessed via Proxmox console only.
+> vmbr2 (10.10.10.0/24) NOT advertised. Lab VMs accessed via Proxmox console only.
 
 ## Install on Proxmox
 ```bash
@@ -26,4 +25,4 @@ systemctl enable tailscaled
 ```
 
 ## Resume Bullet
-> "Deployed Tailscale mesh VPN on pfSense and Proxmox with subnet routing, enabling zero-trust remote access with no exposed WAN ports"
+> "Deployed Tailscale mesh VPN on pfSense and Proxmox with subnet routing — zero-trust remote access, no exposed WAN ports"
