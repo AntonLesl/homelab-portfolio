@@ -4,7 +4,7 @@
 
 **IT Systems Administrator · CompTIA Security+ · B.S. Computer Science (Cybersecurity Emphasis)**
 
-[![Security+](CompTIA Security+.png)](https://www.comptia.org/certifications/security)
+[![Security+](https://github.com/AntonLesl/homelab-portfolio/blob/main/CompTIA%20Security%2B.png)](https://www.comptia.org/certifications/security)
 [![Network+](https://img.shields.io/badge/CompTIA-Network%2B_In_Progress-orange?style=for-the-badge&logo=comptia&logoColor=white)](https://www.comptia.org/certifications/network)
 [![NSA CAE](https://img.shields.io/badge/NSA%2FDHS-CAE_Cyber_Defense-blue?style=for-the-badge&logoColor=white)](#)
 [![LinkedIn](https://www.linkedin.com/in/anton-leslie-618071238/)
