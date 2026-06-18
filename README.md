@@ -7,7 +7,7 @@
 [![Security+](https://img.shields.io/badge/CompTIA-Security%2B-red?style=for-the-badge&logo=comptia&logoColor=white)](https://www.comptia.org/certifications/security)
 [![Network+](https://img.shields.io/badge/CompTIA-Network%2B_In_Progress-orange?style=for-the-badge&logo=comptia&logoColor=white)](https://www.comptia.org/certifications/network)
 [![NSA CAE](https://img.shields.io/badge/NSA%2FDHS-CAE_Cyber_Defense-blue?style=for-the-badge&logoColor=white)](#)
-[![LinkedIn](https://www.linkedin.com/in/anton-leslie-618071238/)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/YOUR_LINKEDIN_HANDLE)
 
 📍 Calumet City, IL &nbsp;|&nbsp; 📧 tieyonleslie00@gmail.com &nbsp;|&nbsp; ☎️ (312) 771-4407
 
@@ -17,9 +17,9 @@
 
 ## About This Repository
 
-This portfolio documents a fully designed and implemented enterprise-grade homelab built to develop and demonstrate real-world skills in network security, firewall administration, DNS hardening, virtualization, Active Directory, SIEM operations, and hands-on attack/defense practice.
+This portfolio documents a fully designed and implemented enterprise-grade homelab covering network security, firewall administration, DNS hardening, virtualization, Active Directory, SIEM operations, and hands-on attack/defense practice. Every section includes step-by-step configuration, exact commands, architecture decisions, and evidence of implementation.
 
-Every section includes step-by-step configuration, working commands, architecture decisions, and evidence of implementation — built to mirror what SOC Analysts, Systems Administrators, and IT Security Analysts do on the job.
+> **Pi-hole runs as a VM on Proxmox (VLAN 10). pfSense runs on a separate dedicated physical device.**
 
 ---
 
@@ -35,7 +35,7 @@ Every section includes step-by-step configuration, working commands, architectur
                         └────────┬─────────┘
                                  │
                         ┌────────▼──────────────────┐
-                        │       pfSense Firewall      │
+                        │   pfSense (physical device) │
                         │  VLAN 10 → 192.168.10.1    │  ← Firewall · Suricata IDS/IPS
                         │  VLAN 30 → 192.168.30.1    │  ← DHCP · NAT · syslog → Wazuh
                         └────────┬──────────────────┘
@@ -46,29 +46,27 @@ Every section includes step-by-step configuration, working commands, architectur
                           │          │           │
                    ┌──────▼───┐ ┌────▼───┐ ┌────▼───────────────────────────────┐
                    │ Pi-hole  │ │ Laptop │ │            Proxmox VE               │
-                   │ VLAN 10  │ │ VLAN10 │ │         192.168.30.10               │
+                   │ VM VLAN10│ │ VLAN10 │ │         192.168.30.10               │
                    │.10.2     │ │.10.x   │ │                                     │
-                   │ DNS+DoH  │ └────────┘ │  ┌─ vmbr0 (VLAN 30) ─────────────┐ │
-                   └──────────┘            │  │  Wazuh SIEM  192.168.30.20    │ │
-                                           │  │  OpenVAS     192.168.30.30    │ │
-                                           │  └───────────────────────────────┘ │
+                   └──────────┘ └────────┘ │  vmbr0 (VLAN 30)                   │
+                                           │  ├── Wazuh SIEM  192.168.30.20     │
+                                           │  └── OpenVAS     192.168.30.30     │
                                            │                                     │
-                                           │  ┌─ vmbr2 (NO UPLINK · ISOLATED) ─┐│
-                                           │  │  Kali Linux    10.10.10.5      ││
-                                           │  │  Windows AD    10.10.10.10     ││
-                                           │  │  Windows 10    10.10.10.20     ││
-                                           │  │  Metasploitable 10.10.10.30    ││
-                                           │  │  ↑ Wazuh logs only · port 1514 ││
-                                           │  └────────────────────────────────┘│
+                                           │  vmbr2 (NO UPLINK · ISOLATED)      │
+                                           │  ├── Kali Linux    10.10.10.5      │
+                                           │  ├── Windows AD    10.10.10.10     │
+                                           │  ├── Windows 10    10.10.10.20     │
+                                           │  └── Metasploitable 10.10.10.30    │
+                                           │     Wazuh logs only · port 1514    │
                                            └────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────────┐
-│  Tailscale VPN overlay · pfSense + Proxmox · zero open WAN ports   │
+│  Tailscale VPN · pfSense + Proxmox · zero open WAN ports           │
 │  Remote access to VLAN 10 + VLAN 30 from anywhere                  │
 └─────────────────────────────────────────────────────────────────────┘
 ```
 
-📄 [Full topology, IP table, and traffic rules →](./TOPOLOGY.md)
+📄 [Full topology, IP table, traffic rules →](./TOPOLOGY.md)
 
 ---
 
@@ -78,19 +76,19 @@ Every section includes step-by-step configuration, working commands, architectur
 
 | # | Project | Skills Demonstrated | Docs |
 |---|---------|-------------------|------|
-| 01 | **GL.iNet Slate 7 — WAN Setup** | DMZ mode, WAN passthrough, router hardening | [→ View](./01-slate7-wan-setup/README.md) |
-| 02 | **pfSense Firewall** | VLAN segmentation, firewall rules, Suricata IDS/IPS, DHCP | [→ View](./02-pfsense-firewall/README.md) |
-| 03 | **Managed Switch — VLAN Config** | 802.1Q trunking, access port assignment, layer-2 isolation | [→ View](./03-managed-switch/README.md) |
-| 04 | **Pi-hole + DNS over HTTPS** | DNS filtering, Cloudflared DoH, 1M+ threat blocklists | [→ View](./04-pihole-dns/README.md) |
-| 05 | **Proxmox VE — Virtualization** | Hypervisor setup, virtual bridge design, network isolation | [→ View](./05-proxmox-virtualization/README.md) |
-| 06 | **Tailscale VPN** | Subnet routing, zero-trust remote access, Tailscale ACLs | [→ View](./06-tailscale-vpn/README.md) |
+| 01 | **GL.iNet Slate 7** | DMZ mode, WAN passthrough, router hardening | [→](./01-slate7-wan-setup/README.md) |
+| 02 | **pfSense Firewall** | VLANs, firewall rules, Suricata IDS/IPS, DHCP | [→](./02-pfsense-firewall/README.md) |
+| 03 | **Managed Switch** | 802.1Q trunking, access port assignment | [→](./03-managed-switch/README.md) |
+| 04 | **Pi-hole + DoH** | DNS filtering, Cloudflared, 1M+ blocklists | [→](./04-pihole-dns/README.md) |
+| 05 | **Proxmox VE** | Hypervisor, vmbr0/vmbr2 bridge design | [→](./05-proxmox-virtualization/README.md) |
+| 06 | **Tailscale VPN** | Subnet routing, zero-trust remote access | [→](./06-tailscale-vpn/README.md) |
 
 ### Cybersecurity Lab
 
 | # | Project | Skills Demonstrated | Docs |
 |---|---------|-------------------|------|
-| 07 | **Isolated Cyber Lab** | AD deployment, network isolation, Kali, Metasploitable | [→ View](./07-cyber-lab/README.md) |
-| 08 | **Wazuh SIEM + Detection Rules** | Log ingestion, MITRE ATT&CK rules, IR playbooks, alerting | [→ View](./08-wazuh-siem/README.md) |
+| 07 | **Isolated Cyber Lab** | AD, Kali, Metasploitable, hypervisor isolation | [→](./07-cyber-lab/README.md) |
+| 08 | **Wazuh SIEM** | Log ingestion, MITRE ATT&CK rules, IR playbooks | [→](./08-wazuh-siem/README.md) |
 
 ---
 
@@ -98,12 +96,12 @@ Every section includes step-by-step configuration, working commands, architectur
 
 | Principle | Implementation |
 |-----------|---------------|
-| **Zero inter-VLAN trust** | pfSense denies all cross-segment traffic by default — explicit allow rules only |
-| **Hypervisor-enforced isolation** | Cyber lab on `vmbr2` — bridge with no physical uplink, no VLAN, no external route |
-| **Encrypted DNS** | All queries → Pi-hole → Cloudflared → Cloudflare 1.1.1.1 over HTTPS |
-| **No exposed ports** | Tailscale mesh VPN — zero inbound rules on WAN |
-| **One-way log channel** | Wazuh agents push logs out on port 1514 only — management unreachable from lab |
-| **MITRE ATT&CK mapped detection** | Custom rules cover T1558.003, T1550.002, T1003.001, T1003.006, T1046, T1110 |
+| **Zero inter-VLAN trust** | pfSense blocks all cross-segment traffic by default |
+| **Hypervisor-enforced isolation** | Cyber lab on vmbr2 — no physical uplink, no route out |
+| **Encrypted DNS** | Pi-hole VM → Cloudflared → Cloudflare 1.1.1.1 over HTTPS |
+| **No exposed ports** | Tailscale mesh VPN — zero inbound WAN rules |
+| **One-way log channel** | Wazuh agents push logs on port 1514 only |
+| **MITRE ATT&CK detection** | Custom rules: T1558.003, T1550.002, T1003.001, T1003.006, T1046, T1110 |
 
 ---
 
@@ -111,42 +109,64 @@ Every section includes step-by-step configuration, working commands, architectur
 
 | Exercise | MITRE ATT&CK | Detection | Report |
 |----------|-------------|-----------|--------|
-| Kerberoasting | [T1558.003](https://attack.mitre.org/techniques/T1558/003/) | Event 4769 — RC4 TGS request | [→ IR-001](./08-wazuh-siem/incident-reports/IR-001-kerberoasting.md) |
-| Pass-the-Hash | [T1550.002](https://attack.mitre.org/techniques/T1550/002/) | Event 4624 — NTLM network logon | [→ IR-002](./08-wazuh-siem/incident-reports/IR-002-pass-the-hash.md) |
-| BloodHound enumeration | [T1087.002](https://attack.mitre.org/techniques/T1087/002/) | Event 4662 — LDAP replication | [→ IR-003](./08-wazuh-siem/incident-reports/IR-003-bloodhound.md) |
-| Metasploit vsftpd exploit | [T1190](https://attack.mitre.org/techniques/T1190/) | Suricata + process alert | [→ IR-004](./08-wazuh-siem/incident-reports/IR-004-vsftpd.md) |
-| LSASS credential dump | [T1003.001](https://attack.mitre.org/techniques/T1003/001/) | Event 4656 — LSASS handle | [→ IR-005](./08-wazuh-siem/incident-reports/IR-005-lsass-dump.md) |
+| Kerberoasting | [T1558.003](https://attack.mitre.org/techniques/T1558/003/) | Event 4769 RC4 TGS | [→](./08-wazuh-siem/incident-reports/IR-001-kerberoasting.md) |
+| Pass-the-Hash | [T1550.002](https://attack.mitre.org/techniques/T1550/002/) | Event 4624 NTLM logon | [→](./08-wazuh-siem/incident-reports/IR-002-pass-the-hash.md) |
+| BloodHound AD enum | [T1087.002](https://attack.mitre.org/techniques/T1087/002/) | Event 4662 LDAP | [→](./08-wazuh-siem/incident-reports/IR-003-bloodhound.md) |
+| Metasploit vsftpd | [T1190](https://attack.mitre.org/techniques/T1190/) | Suricata + process | [→](./08-wazuh-siem/incident-reports/IR-004-vsftpd.md) |
+| LSASS dump | [T1003.001](https://attack.mitre.org/techniques/T1003/001/) | Event 4656 LSASS | [→](./08-wazuh-siem/incident-reports/IR-005-lsass-dump.md) |
 
 ---
 
-## IP Address Reference
+## Repository Structure
+
+```
+homelab-portfolio/
+├── README.md                          ← You are here
+├── TOPOLOGY.md                        ← Full IP scheme and traffic rules
+├── 01-slate7-wan-setup/               ← Slate 7 DMZ config
+├── 02-pfsense-firewall/               ← VLANs, rules, Suricata
+│   ├── firewall-rules.md
+│   └── vlan-config.md
+├── 03-managed-switch/                 ← 802.1Q port config
+├── 04-pihole-dns/                     ← Pi-hole VM + DoH
+│   └── blocklists.md
+├── 05-proxmox-virtualization/         ← Hypervisor + bridges
+│   └── network-interfaces.conf
+├── 06-tailscale-vpn/                  ← Remote access
+├── 07-cyber-lab/                      ← Isolated attack/defense lab
+│   ├── network-design.md
+│   ├── active-directory-setup/
+│   └── attack-exercises/
+├── 08-wazuh-siem/                     ← SIEM + detection
+│   ├── custom-rules.xml
+│   └── incident-reports/
+├── build-guide/                       ← Step-by-step build instructions
+│   └── README.md + 9 step files
+├── docs/                              ← Personal build guide (Word doc)
+├── scripts/                           ← Automation scripts
+└── diagrams/                          ← Network topology diagrams
+```
+
+---
+
+## IP Quick Reference
 
 <details>
-<summary>Click to expand full IP table</summary>
+<summary>Click to expand</summary>
 
-### VLAN 10 — Trusted (192.168.10.0/24)
-| Device | IP | Role |
+| Device | IP | VLAN |
 |--------|-----|------|
-| pfSense gateway | 192.168.10.1 | Default gateway |
-| Pi-hole | 192.168.10.2 | DNS (static) |
-| Trusted laptop | 192.168.10.100–200 | DHCP |
-
-### VLAN 30 — Lab Infrastructure (192.168.30.0/24)
-| Device | IP | Role |
-|--------|-----|------|
-| pfSense gateway | 192.168.30.1 | Default gateway |
-| Proxmox VE | 192.168.30.10 | Hypervisor (static) |
-| Wazuh SIEM | 192.168.30.20 | Log aggregation (static) |
-| OpenVAS | 192.168.30.30 | Vuln scanner (static) |
-| Switch | 192.168.30.200 | Management (static) |
-
-### vmbr2 — Isolated Cyber Lab (10.10.10.0/24)
-| Device | IP | Role |
-|--------|-----|------|
-| Kali Linux | 10.10.10.5 | Attacker |
-| Windows Server 2022 | 10.10.10.10 | Domain controller |
-| Windows 10 | 10.10.10.20 | Victim workstation |
-| Metasploitable 2 | 10.10.10.30 | Vulnerable target |
+| pfSense — VLAN 10 GW | 192.168.10.1 | 10 |
+| Pi-hole VM | 192.168.10.2 | 10 |
+| pfSense — VLAN 30 GW | 192.168.30.1 | 30 |
+| Proxmox VE | 192.168.30.10 | 30 |
+| Wazuh SIEM | 192.168.30.20 | 30 |
+| OpenVAS | 192.168.30.30 | 30 |
+| Switch mgmt | 192.168.30.200 | 30 |
+| Kali Linux | 10.10.10.5 | vmbr2 |
+| Windows Server 2022 | 10.10.10.10 | vmbr2 |
+| Windows 10 | 10.10.10.20 | vmbr2 |
+| Metasploitable 2 | 10.10.10.30 | vmbr2 |
 
 </details>
 
@@ -193,9 +213,9 @@ Every section includes step-by-step configuration, working commands, architectur
 
 | Role | Organization | Technologies |
 |------|-------------|-------------|
-| Campus IT Systems Support | University IT Dept | Entra ID, AD, Intune, SonicWall, Atera RMM |
+| Campus IT Systems Support | University IT | Entra ID, AD, Intune, SonicWall, Atera RMM |
 | Geek Squad Consultant & ARA | Best Buy | M365, Exchange Online, endpoint security |
-| Cyber Defense Analyst | BSU Institute of Pervasive Cybersecurity | Stellar Cyber XDR, Greenbone VM, DFIR |
+| Cyber Defense Analyst | BSU Pervasive Cybersecurity | Stellar Cyber XDR, Greenbone VM, DFIR |
 | Help Desk Analyst | SYKES | Service desk, Active Directory, ticketing |
 
 ---

@@ -12,21 +12,21 @@
                         └────────┬─────────┘
                                  │
                         ┌────────▼──────────────────┐
-                        │       pfSense Firewall      │
+                        │       pfSense Firewall      │  Separate physical device
                         │  VLAN 10 → 192.168.10.1    │  Firewall · Suricata IDS
-                        │  VLAN 30 → 192.168.30.1    │  DHCP · NAT · IPS
+                        │  VLAN 30 → 192.168.30.1    │  DHCP · NAT
                         └────────┬──────────────────┘
                                  │ trunk (VLANs 10, 30)
                    ┌─────────────▼──────────────────────┐
-                   │        8-Port Managed Switch         │  802.1Q VLAN distribution
+                   │        8-Port Managed Switch         │
                    └──────┬──────────┬──────────┬────────┘
                           │          │           │
                    ┌──────▼───┐ ┌────▼───┐ ┌────▼───────────────────────────────┐
                    │ Pi-hole  │ │ Laptop │ │            Proxmox VE               │
-                   │ VLAN 10  │ │ VLAN10 │ │         192.168.30.10               │
+                   │ VM VLAN10│ │ VLAN10 │ │         192.168.30.10               │
                    │.10.2     │ │.10.x   │ │                                     │
-                   │ DNS+DoH  │ └────────┘ │  vmbr0 (VLAN 30)                   │
-                   └──────────┘            │  ├── Wazuh SIEM  192.168.30.20     │
+                   └──────────┘ └────────┘ │  vmbr0 (VLAN 30)                   │
+                                           │  ├── Wazuh SIEM  192.168.30.20     │
                                            │  └── OpenVAS     192.168.30.30     │
                                            │                                     │
                                            │  vmbr2 (NO UPLINK · ISOLATED)      │
@@ -38,7 +38,6 @@
                                            └────────────────────────────────────┘
 
 Tailscale VPN overlay · pfSense + Proxmox · zero open WAN ports
-Remote access to VLAN 10 + VLAN 30 from anywhere
 ```
 
 ## IP Address Scheme
@@ -47,7 +46,7 @@ Remote access to VLAN 10 + VLAN 30 from anywhere
 | Device | IP | Notes |
 |--------|-----|-------|
 | pfSense gateway | 192.168.10.1 | VLAN 10 interface |
-| Pi-hole | 192.168.10.2 | Static — DNS for all VLANs |
+| Pi-hole VM | 192.168.10.2 | Static — VM on Proxmox vmbr0 VLAN 10 |
 | Trusted laptop | 192.168.10.100–200 | DHCP range |
 
 ### VLAN 30 — Lab Infrastructure (192.168.30.0/24)
@@ -64,14 +63,14 @@ Remote access to VLAN 10 + VLAN 30 from anywhere
 |--------|-----|-------|
 | Kali Linux | 10.10.10.5 | Attacker VM |
 | Windows Server 2022 | 10.10.10.10 | Domain controller (lab.local) |
-| Windows 10 | 10.10.10.20 | Domain-joined victim workstation |
+| Windows 10 | 10.10.10.20 | Domain-joined victim |
 | Metasploitable 2 | 10.10.10.30 | Vulnerable Linux target |
 
 ## Switch Port Assignment
 | Port | Mode | VLAN | Device |
 |------|------|------|--------|
 | 1 | Trunk | 10, 30 | pfSense LAN port |
-| 2 | Access | 10 | Pi-hole |
+| 2 | Access | 10 | Pi-hole VM |
 | 3 | Access | 10 | Trusted laptop |
 | 4 | Access | 30 | Proxmox server |
 | 5–8 | Spare | — | Available |
@@ -84,5 +83,5 @@ Remote access to VLAN 10 + VLAN 30 from anywhere
 | VLAN 30 | Internet | Allow (updates) | pfSense |
 | VLAN 30 | VLAN 10 | Block | pfSense |
 | vmbr2 | Internet | Block | Proxmox (no uplink) |
-| vmbr2 | VLAN 10 | Block | Proxmox (no uplink) |
 | vmbr2 | 192.168.30.20:1514 | Allow | Proxmox static route |
+| Any | Tailscale nodes | Allow | pfSense + Tailscale ACL |
