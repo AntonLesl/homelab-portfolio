@@ -7,7 +7,7 @@
 [![Security+](https://img.shields.io/badge/CompTIA-Security%2B-red?style=for-the-badge&logo=comptia&logoColor=white)](https://www.comptia.org/certifications/security)
 [![Network+](https://img.shields.io/badge/CompTIA-Network%2B_In_Progress-orange?style=for-the-badge&logo=comptia&logoColor=white)](https://www.comptia.org/certifications/network)
 [![NSA CAE](https://img.shields.io/badge/NSA%2FDHS-CAE_Cyber_Defense-blue?style=for-the-badge&logoColor=white)](#)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/YOUR_LINKEDIN_HANDLE)
+[![LinkedIn](https://www.linkedin.com/in/anton-leslie-618071238/)
 
 📍 Calumet City, IL &nbsp;|&nbsp; 📧 tieyonleslie00@gmail.com &nbsp;|&nbsp; ☎️ (312) 771-4407
 
