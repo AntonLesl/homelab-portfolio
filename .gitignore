@@ -1,2 +1,9 @@
-.DS_Store
-.DS_Store
+*.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.bak
+secrets/
+credentials/
+*.key
+*.pem
