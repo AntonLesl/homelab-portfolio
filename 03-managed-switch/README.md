@@ -1,24 +1,31 @@
-# 03 — Managed Switch VLAN Configuration
-**Skills:** 802.1Q trunking, access port assignment, layer-2 isolation
+# 03 — Netgear GS308E Managed Switch
 
-## Port Assignment
-| Port | Mode | VLAN | Device |
-|------|------|------|--------|
-| 1 | Trunk | 10, 30 | pfSense LAN port |
-| 2 | Access | 10 | Pi-hole VM |
-| 3 | Access | 10 | Trusted laptop |
-| 4 | Access | 30 | Proxmox server |
-| 5–8 | Spare | — | — |
+**Status:** ✅ Complete
+**Skills:** 802.1Q VLAN trunking, access/tagged ports, PVID, port membership
 
-## TP-Link TL-SG108E Steps
-1. Set management IP: `192.168.30.200`
-2. VLAN → 802.1Q VLAN → Enable
-3. VLAN 10: Port 1 Tagged, Ports 2–3 Untagged
-4. VLAN 30: Port 1 Tagged, Port 4 Untagged
-5. PVID: Port 2→10, Port 3→10, Port 4→30
+## What This Is
 
-## Verification
-Plug laptop into port 3 → should get `192.168.10.x` IP from pfSense DHCP.
+A Netgear GS308E managed switch carrying both the trusted LAN and the lab VLAN over a single trunk to pfSense, then breaking them out to access ports for individual devices.
 
-## Resume Bullet
-> "Configured 8-port managed switch with 802.1Q VLAN trunking enforcing layer-2 traffic isolation between all segments"
+## Why a Managed Switch
+
+An unmanaged switch can't separate VLANs. To carry two segments (trusted + lab) over one cable to the firewall and deliver each to the right device, you need 802.1Q VLAN tagging — which requires a managed switch.
+
+## Port Design
+
+```
+Port 1  — Tagged trunk to pfSense (carries all VLANs)
+Port 3  — Untagged trusted LAN (workstation)   · PVID = trusted
+Port 4  — Untagged lab VLAN (Proxmox)          · PVID = lab
+```
+
+The trunk port is **tagged** for every VLAN it carries. Each access port is **untagged** for exactly one VLAN, and its **PVID** matches that VLAN so untagged frames from the device get placed on the right segment.
+
+## Critical Lesson
+
+This switch must run in **Advanced 802.1Q mode**, not Basic. See ISSUES.md — Basic mode broke all ethernet.
+
+## Reference
+
+- Netgear GS308E 802.1Q VLAN configuration: https://www.netgear.com/support/product/gs308e/
+- 802.1Q overview: https://en.wikipedia.org/wiki/IEEE_802.1Q

@@ -1,28 +1,25 @@
-# 06 — Tailscale VPN
-**Skills:** Mesh VPN, subnet routing, zero-trust remote access, ACL policy
+# 06 — Tailscale Mesh VPN
 
-## Subnet Routes Advertised
-| Node | Subnet |
-|------|--------|
-| pfSense | 192.168.10.0/24 |
-| Proxmox | 192.168.30.0/24 |
+**Status:** ✅ Complete
+**Skills:** Zero-trust mesh VPN, subnet routing, WireGuard, ACL policy
 
-> vmbr2 (10.10.10.0/24) NOT advertised. Lab VMs accessed via Proxmox console only.
+## What This Is
 
-## Install on Proxmox
-```bash
-curl -fsSL https://tailscale.com/install.sh | sh
-tailscale up --advertise-routes=192.168.30.0/24 --ssh --accept-dns=false
-systemctl enable tailscaled
-```
+A Tailscale mesh VPN overlaying pfSense and Proxmox, giving secure remote access to the homelab from anywhere — with zero open ports on the WAN.
 
-## ACL Policy
-```json
-{
-  "acls": [{ "action": "accept", "src": ["autogroup:member"],
-    "dst": ["192.168.10.0/24:*", "192.168.30.0/24:*"] }]
-}
-```
+## Why Tailscale
 
-## Resume Bullet
-> "Deployed Tailscale mesh VPN on pfSense and Proxmox with subnet routing — zero-trust remote access, no exposed WAN ports"
+Traditional remote access means port-forwarding and exposing services to the internet. Tailscale (built on WireGuard) creates an encrypted mesh where devices connect to each other directly through a coordination plane, so nothing needs to be exposed on the WAN. Subnet routing lets a single node advertise a whole LAN/VLAN so I can reach internal services without installing Tailscale on every device.
+
+## Design
+
+- Tailscale on Proxmox acting as a subnet router advertising the internal subnet(s)
+- Tailscale on pfSense for firewall-level remote management
+- ACL policy restricting who can reach which subnets
+- Dashboard tiles use the stable Tailscale addresses so they resolve from any network
+
+## References
+
+- Tailscale subnet routers: https://tailscale.com/kb/1019/subnets/
+- Tailscale ACLs: https://tailscale.com/kb/1018/acls/
+- Tailscale on pfSense: https://tailscale.com/kb/1097/install-freebsd/

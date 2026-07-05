@@ -1,22 +1,35 @@
 # 02 — pfSense Firewall
-**Skills:** VLAN segmentation, firewall rules, Suricata IDS/IPS, DHCP hardening
 
-## Purpose
-Separate physical device. Core firewall handling routing, VLAN enforcement, IDS/IPS, DHCP.
+**Status:** ✅ Complete
+**Skills:** VLAN segmentation, firewall rule design, DHCP, outbound NAT, remote syslog
 
-## Steps
-1. Install pfSense CE on mini PC (2 NICs: WAN + LAN)
-2. Setup wizard — LAN: `192.168.10.1/24`
-3. Create VLAN 10 (TRUSTED) and VLAN 30 (LAB)
-4. Configure DHCP — Pi-hole VM `192.168.10.2` as only DNS server
-5. Add firewall rules — see [firewall-rules.md](./firewall-rules.md)
-6. Enable syslog to Wazuh `192.168.30.20:514`
-7. Install Suricata on WAN (do this last at Step 12)
+## What This Is
 
-## Config Files
-- [firewall-rules.md](./firewall-rules.md)
-- [vlan-config.md](./vlan-config.md)
+pfSense CE running on a dedicated Lenovo ThinkCentre M60E. This is the core of the network — it handles routing, VLAN enforcement, DHCP, firewall rules, cross-VLAN NAT, and forwards logs to the SIEM.
 
-## Resume Bullets
-> "Deployed pfSense CE with VLAN segmentation enforcing zero inter-VLAN trust via explicit allow/deny ruleset"
-> "Configured Suricata IDS/IPS on WAN with ET Open rulesets for real-time threat detection"
+## Why pfSense on Dedicated Hardware
+
+A firewall should be a single-purpose, always-on device that isn't sharing resources or a reboot schedule with anything else. Running it on its own mini PC keeps the security boundary independent of the hypervisor. pfSense CE is free, battle-tested, and gives enterprise features (VLANs, IDS/IPS, NAT rules, syslog) on cheap hardware.
+
+## Network Design
+
+Two segments off the LAN interface:
+- **Trusted LAN** — workstations, native on the LAN interface
+- **Lab VLAN** — a tagged 802.1Q subinterface for the Proxmox/lab side
+
+Default-deny is the baseline; each allow rule is explicit and documented in `firewall-rules` reasoning below.
+
+## Key Configuration
+
+- WAN pulls its address from the Slate 7 DMZ
+- LAN interface hosts the trusted subnet
+- A single tagged VLAN subinterface carries the lab segment
+- Outbound NAT rule enables cross-VLAN DNS to Pi-hole (see ISSUES.md Issue on cross-VLAN DNS)
+- Remote syslog forwards firewall/DHCP/auth/system events to Wazuh
+
+## References
+
+- pfSense install: https://docs.netgate.com/pfsense/en/latest/install/
+- Firewall rule methodology: https://docs.netgate.com/pfsense/en/latest/firewall/rule-methodology.html
+- Outbound NAT: https://docs.netgate.com/pfsense/en/latest/nat/outbound.html
+- Remote logging: https://docs.netgate.com/pfsense/en/latest/monitoring/logs/remote.html

@@ -1,81 +1,26 @@
-# Commands — 01 GL.iNet Slate 7 WAN Setup
+# Commands — 01 Slate 7 WAN Setup
 
-All commands and steps used during Slate 7 setup with explanations and references.
+Most of the Slate 7 work is done in its web UI. These are the verification commands run from a client and the reasoning behind each.
 
----
+## Confirm which network the client is on
 
-## Windows — Network Verification
-
-### Check current IP address
 ```powershell
 ipconfig
 ```
-**What it does:** Shows all network adapters and their IP addresses. Used to verify laptop is connected to Slate 7 network (should show 192.168.8.x).
-**Reference:** https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/ipconfig
+**Why:** Before you can reach the Slate 7 admin portal you must be on its subnet. The admin portal is unreachable from any other subnet. This was the exact cause of Issue 001.
+**Where learned:** Standard Windows networking — https://learn.microsoft.com/windows-server/administration/windows-commands/ipconfig
 
----
+## Release and renew DHCP after moving networks
 
-### Ping Slate 7 gateway
 ```powershell
-ping 192.168.8.1
+ipconfig /release
+ipconfig /renew
 ```
-**What it does:** Tests connectivity to the Slate 7 admin panel IP. Should reply when connected to Slate 7 Wi-Fi or LAN.
-**Reference:** https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/ping
+**Why:** After plugging into the Slate 7 LAN, force a new lease so the client picks up an address on the router's subnet instead of holding a stale lease.
 
----
+## Confirm the public IP is reaching the WAN
 
-### Ping pfSense WAN IP (after DMZ config)
 ```powershell
-ping 192.168.8.2
+ping 8.8.8.8
 ```
-**What it does:** Verifies pfSense WAN interface received the correct IP from Slate 7 DMZ.
-
----
-
-## Slate 7 Admin Panel — Browser Steps
-
-All Slate 7 configuration is done through the web interface at `http://192.168.8.1`
-
-### Access admin panel
-```
-http://192.168.8.1
-```
-**Reference:** https://docs.gl-inet.com/router/en/4/interface_guide/internet/
-
----
-
-### Enable DMZ
-```
-More Settings → Network → DMZ
-Enable: ON
-DMZ Host IP: 192.168.8.2
-```
-**What it does:** Forwards all inbound traffic from the ISP to pfSense at 192.168.8.2. Eliminates double-NAT so pfSense sees real source IPs.
-**Reference:** https://docs.gl-inet.com/router/en/4/interface_guide/firewall/#dmz
-
----
-
-### Disable GL.iNet Cloud
-```
-More Settings → Cloud → Disable
-```
-**Reference:** https://docs.gl-inet.com/router/en/4/interface_guide/cloud/
-
----
-
-### Disable SSH
-```
-More Settings → Administration → SSH → Disable
-```
-**Reference:** https://docs.gl-inet.com/router/en/4/interface_guide/ssh/
-
----
-
-## Key References
-
-| Topic | URL |
-|-------|-----|
-| GL.iNet documentation | https://docs.gl-inet.com/router/en/4/ |
-| DMZ configuration | https://docs.gl-inet.com/router/en/4/interface_guide/firewall/#dmz |
-| Network settings | https://docs.gl-inet.com/router/en/4/interface_guide/internet/ |
-| GL.iNet Slate 7 product page | https://www.gl-inet.com/products/gl-axt1800/ |
+**Why:** Confirms upstream connectivity through the Slate 7 before layering pfSense behind it.

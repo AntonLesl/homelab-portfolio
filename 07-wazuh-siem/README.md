@@ -1,36 +1,25 @@
-# 08 — Wazuh SIEM + Detection Engineering
+# 07 — Wazuh SIEM
 
-**Skills:** SIEM deployment, log ingestion, MITRE ATT&CK rules, IR playbooks
+**Status:** ✅ Complete
+**Skills:** SIEM deployment, agent management, custom detection rules, MITRE ATT&CK mapping, log correlation
 
-## Log Sources
-| Source | Method | Key Events |
-|--------|--------|-----------|
-| pfSense | Syslog UDP 514 | Firewall blocks, DHCP |
-| Kali Linux | Wazuh agent | Commands, network |
-| Windows Server 2022 | Wazuh agent | AD security events |
-| Windows 10 | Wazuh agent | Logon, process creation |
+## What This Is
 
-## Install
-```bash
-curl -sO https://packages.wazuh.com/4.7/wazuh-install.sh
-curl -sO https://packages.wazuh.com/4.7/config.yml
-# Edit config.yml — set all IPs to 192.168.30.20
-bash wazuh-install.sh -a
-```
+Wazuh — an open-source SIEM/XDR — deployed on Proxmox, collecting logs from pfSense and endpoint agents (including the isolated lab hosts), with six custom detection rules mapped to MITRE ATT&CK techniques.
 
-## Custom Rules
-See [`custom-rules.xml`](./custom-rules.xml) — 6 rules covering T1558.003, T1550.002, T1003.001, T1003.006, T1046, T1110
+## Why Wazuh
 
-## Incident Reports
-| # | Incident | MITRE |
-|---|----------|-------|
-| [IR-001](./incident-reports/IR-001-kerberoasting.md) | Kerberoasting | T1558.003 |
-| [IR-002](./incident-reports/IR-002-pass-the-hash.md) | Pass-the-Hash | T1550.002 |
-| [IR-003](./incident-reports/IR-003-bloodhound.md) | BloodHound enum | T1087.002 |
-| [IR-004](./incident-reports/IR-004-vsftpd.md) | vsftpd exploit | T1190 |
-| [IR-005](./incident-reports/IR-005-lsass-dump.md) | LSASS dump | T1003.001 |
+Wazuh provides SIEM, host-based intrusion detection, log analysis, and file integrity monitoring in one open-source platform. It ingests syslog from the firewall and agent telemetry from Windows/Linux hosts, so security events across the whole environment land in one searchable place — exactly the workflow a SOC analyst uses.
 
-## Resume Bullets
-> "Deployed Wazuh SIEM aggregating logs from 5+ sources across isolated VLAN segments"
-> "Authored custom Wazuh rules mapped to MITRE ATT&CK for 6 AD attack techniques"
-> "Produced 5 incident response playbooks with attack execution, SIEM evidence, and remediation"
+## Design
+
+- Wazuh manager + dashboard on Proxmox
+- pfSense forwards syslog (firewall/DHCP/auth/system) to the manager
+- Agents on lab hosts forward telemetry (lab hosts can reach the SIEM for logs only)
+- Six custom rules mapped to MITRE ATT&CK cover the attack techniques rehearsed in the lab
+
+## References
+
+- Wazuh install guide: https://documentation.wazuh.com/current/installation-guide/
+- Custom rules: https://documentation.wazuh.com/current/user-manual/ruleset/custom.html
+- MITRE ATT&CK: https://attack.mitre.org/

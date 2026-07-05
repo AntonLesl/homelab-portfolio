@@ -1,9 +1,15 @@
-*.DS_Store
+# OS / editor
+.DS_Store
 Thumbs.db
-*.log
-*.tmp
-*.bak
-secrets/
-credentials/
+*.swp
+
+# Secrets — never commit
 *.key
 *.pem
+secrets.*
+credentials.*
+*.env
+
+# Local notes
+private/
+*-private.md
