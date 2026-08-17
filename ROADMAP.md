@@ -38,7 +38,7 @@ flowchart TD
     classDef target fill:#0a0a0a,stroke:#ffc9a8,color:#ffc9a8,font-weight:bold,stroke-width:2px
 ```
 
-**Legend:** 🟤 Earned &nbsp;·&nbsp; 🍑 In progress &nbsp;·&nbsp; ⚫ Planned &nbsp;·&nbsp; ⬛ Ongoing
+**Legend:**  Earned &nbsp;·&nbsp;   In progress &nbsp;·&nbsp; 🟤 Planned &nbsp;·&nbsp; ⬛ Ongoing
 
 ---
 
