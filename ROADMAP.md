@@ -53,16 +53,16 @@ gantt
 
     section Foundation
     Security+ (earned)                 :done, sec, 2026-01-01, 2026-08-16
-    Network+ (in progress)             :active, net, 2026-08-17, 2026-09-13
+    Network+ (in progress)             :active, net, 2026-08-17, 2026-09-25
 
     section Build
-    Cisco CCNA                         :ccna, 2026-09-14, 2026-11-22
-    Linux Essentials                   :linux, 2026-11-23, 2026-12-06
-    AWS Cloud Practitioner             :aws, 2026-12-07, 2026-12-27
+    Cisco CCNA                         :ccna, 2026-09-28, 2026-12-04
+    Linux Essentials                   :linux, 2026-12-07, 2026-12-18
+    AWS Cloud Practitioner             :aws, 2026-12-21, 2027-01-08
 
     section Identity Platforms
-    Microsoft SC-300                   :sc300, 2026-12-28, 2027-01-24
-    Okta Certified Professional        :okta, 2027-01-25, 2027-02-14
+    Microsoft SC-300                   :sc300, 2027-01-11, 2027-02-06
+    Okta Certified Professional        :okta, 2027-02-09, 2027-02-27
 ```
 
 *Dates are a planning estimate, not a deadline — the point is momentum, not a race. Adjust as real life happens.*
@@ -74,12 +74,12 @@ gantt
 | # | Cert | Status | Window | Why it's here and not somewhere else |
 |---|------|--------|--------|----------------------------------------|
 | 1 | **CompTIA Security+** | ✅ Earned | — | The baseline — CIA triad, risk, threats, controls. Everything else builds on it. |
-| 2 | **CompTIA Network+** | 🔄 In progress | Aug 17 – Sep 13 | You can't secure a network you don't understand. Direct payoff already: VLANs, NAT, and firewall rules in the homelab match this material 1:1. |
-| 3 | **Cisco CCNA** | ⬜ Next | Sep 14 – Nov 22 | Right after Network+ while routing, switching, and subnetting are freshest — deepens networking immediately instead of letting momentum go cold on unrelated material first. |
-| 4 | **Linux Essentials** | ⬜ Planned | Nov 23 – Dec 6 | A fast, lower-stakes win after the CCNA marathon — formalizes skills already in daily use: Wazuh, pfSense, Pi-hole, and Kali all run on Linux. |
-| 5 | **AWS Certified Cloud Practitioner** | ⬜ Planned | Dec 7 – Dec 27 | The shortest, most foundational cloud cert — seeds the vocabulary (IAM, roles, policies) that SC-300 later goes deep on, without requiring hands-on AWS infra first. |
-| 6 | **Microsoft SC-300** (Identity & Access Administrator) | ⬜ Planned | Dec 28 – Jan 24 | Builds directly on the homelab's Windows Server 2022 AD domain controller and on-the-job Entra ID / Intune experience — formalizes skills already in use. |
-| 7 | **Okta Certified Professional** | ⬜ Planned | Jan 25 – Feb 14 | The capstone: a dedicated, market-leading identity platform. Comes last because SC-300 builds the identity *concepts* (federation, SSO, conditional access, provisioning) that Okta's platform-specific exam then applies. |
+| 2 | **CompTIA Network+** | 🔄 In progress | Aug 17 – Sep 25 | You can't secure a network you don't understand. Direct payoff already: VLANs, NAT, and firewall rules in the homelab match this material 1:1. Weekday-only schedule covering every Professor Messer video: [`NETWORK-PLUS-STUDY-SCHEDULE.md`](./NETWORK-PLUS-STUDY-SCHEDULE.md). |
+| 3 | **Cisco CCNA** | ⬜ Next | Sep 28 – Dec 4 | Right after Network+ while routing, switching, and subnetting are freshest — deepens networking immediately instead of letting momentum go cold on unrelated material first. |
+| 4 | **Linux Essentials** | ⬜ Planned | Dec 7 – Dec 18 | A fast, lower-stakes win after the CCNA marathon — formalizes skills already in daily use: Wazuh, pfSense, Pi-hole, and Kali all run on Linux. |
+| 5 | **AWS Certified Cloud Practitioner** | ⬜ Planned | Dec 21 – Jan 8 | The shortest, most foundational cloud cert — seeds the vocabulary (IAM, roles, policies) that SC-300 later goes deep on, without requiring hands-on AWS infra first. |
+| 6 | **Microsoft SC-300** (Identity & Access Administrator) | ⬜ Planned | Jan 11 – Feb 6 | Builds directly on the homelab's Windows Server 2022 AD domain controller and on-the-job Entra ID / Intune experience — formalizes skills already in use. |
+| 7 | **Okta Certified Professional** | ⬜ Planned | Feb 9 – Feb 27 | The capstone: a dedicated, market-leading identity platform. Comes last because SC-300 builds the identity *concepts* (federation, SSO, conditional access, provisioning) that Okta's platform-specific exam then applies. |
 
 ---
 
