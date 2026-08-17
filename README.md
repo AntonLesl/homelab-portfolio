@@ -1,10 +1,28 @@
-# Enterprise Homelab Portfolio
+<p align="center">
+  <img src="./assets/hero-banner.png" alt="Anton Leslie" width="100%">
+</p>
 
-**Anton Leslie** — IT Systems Administrator | CompTIA Security+ | B.S. Computer Science (Cybersecurity Emphasis, Boise State — NSA/DHS CAE-CD)
+<h1 align="center">Enterprise Homelab Portfolio</h1>
+
+<p align="center"><b>Anton Leslie</b> — IT Systems Administrator | CompTIA Security+ | B.S. Computer Science (Cybersecurity Emphasis, Boise State — NSA/DHS CAE-CD)</p>
 
 A complete enterprise-grade network, security monitoring stack, and isolated attack lab built from scratch on physical hardware. Every section documents what was built, every command used (with references), and every problem hit along the way with its root cause and fix.
 
+![Security+](https://img.shields.io/badge/CompTIA%20Security%2B-Earned-c97a53?style=flat-square&labelColor=1a0a0a)
+![Network+](https://img.shields.io/badge/CompTIA%20Network%2B-In%20Progress-ffc9a8?style=flat-square&labelColor=1a0a0a)
+![Roadmap](https://img.shields.io/badge/Roadmap-1%2F7%20Certs%20Earned-c97a53?style=flat-square&labelColor=1a0a0a)
+![Status](https://img.shields.io/badge/Homelab-11%2F12%20Sections%20Complete-c97a53?style=flat-square&labelColor=1a0a0a)
+
 > **Note on sanitization:** All internal IP addresses, hostnames of note, and credentials are deliberately omitted or replaced with placeholders like `[firewall LAN IP]`. This repository is public.
+
+---
+
+## 🗺️ Certification Roadmap
+
+This homelab is the hands-on half of a deliberate plan: Security+ → Network+ → CCNA → Linux Essentials → AWS Cloud Practitioner → Microsoft SC-300 → Okta Certified Professional — a broad, deliberately-ordered path, not a bet on one narrow job title.
+
+**→ Full visual roadmap, timeline, and the reasoning behind the order: [ROADMAP.md](./ROADMAP.md)**
+**→ The daily study rhythm behind it: [DAILY-STUDY-PLAN.md](./DAILY-STUDY-PLAN.md)**
 
 ---
 
