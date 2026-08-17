@@ -110,8 +110,8 @@ Every section contains:
 | Device | Role |
 |--------|------|
 | GL.iNet Slate 7 | WAN entry router (DMZ mode) |
-| Lenovo ThinkCentre M60E | pfSense firewall appliance |
-| Lenovo ThinkCentre (upgraded 500GB SSD) | Proxmox VE hypervisor |
+| Dell OptiPlex 7040 MFF Computer i5-6500T | pfSense firewall appliance |
+| Dell OptiPlex 7040 MFF Computer i5-6500T (upgraded 500GB SSD) | Proxmox VE hypervisor |
 | Netgear GS308E | Managed switch (Advanced 802.1Q) |
 
 ---
